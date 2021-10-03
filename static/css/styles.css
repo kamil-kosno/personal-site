@@ -191,3 +191,7 @@ hr {
 .footer-icon {
     padding: 0 20px 0 10px;
 }
+
+.message-form-errors {
+    color: red;
+}

@@ -119,7 +119,7 @@
     <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#sendMessage">CONTACT ME</a>
   </div>
 </div>
-    <!-- Modal -->
+    <!-- Modals -->
                         <div class="modal fade" id="sendMessage" tabindex="-1" data-bs-backdrop="static"
                              aria-labelledby="sendMessageLabel" aria-hidden="true">
                           <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -129,6 +129,8 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div class="modal-body">
+                                  <span id="message-form-errors" class="message-form-errors">
+                                  </span>
                                 {{ form.csrf_token }}
                                 {{ wtf.quick_form(form, id='message_form') }}
                               </div>
@@ -139,12 +141,34 @@
                             </div>
                           </div>
                         </div>
+
+    <div class="modal fade" id="confirmMessage" tabindex="-1" data-bs-backdrop="static" aria-labelledby="confirmMessageLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3>Thank you for your message! Press OK and wait..</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <hr>
 <div class="bottom-container">
     <a class="footer-link" href="https://www.linkedin.com/in/kamil-kosno-2b082761/"><i class="fab fa-linkedin footer-icon fa-4x"></i></a>
   <p class="footer-description">© 2021 Kamil Kosno.</p>
 </div>
-
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script type="text/javascript" src={{url_for('static', filename="js/scripts.js")}}></script>
+    <!--core ajax-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/1678f3c00f.js" crossorigin="anonymous"></script>
     <script>
         function validate()
         {
@@ -169,12 +193,35 @@
                     {
                         if(obj != null && 'errMessage' in obj)
                         {
-                            alert(obj['errMessage']);
+                            //span
+                            var err = document.getElementById('message-form-errors');
+                            var messages = (obj['errMessage']).split("\n");
+
+                            let html = "";
+                            messages.forEach(add_errors);
+                            err.innerHTML = html;
+
+                            function add_errors(item, index) {
+                                html += "<p>" + item + "</p>";
+                            }
                         }
                         else
                         {
-                            form.submit();
-                            confirm('Thank you for your message!');
+                            try
+                            {
+                                confirmMessageModalDiv = document.getElementById('confirmMessage');
+                                confirmMessageModalDiv.addEventListener('hidden.bs.modal', function (event) {
+                                    form.submit();
+                                })
+                                var confirmModal = new bootstrap.Modal
+                                (
+                                    document.getElementById('confirmMessage'), {keyboard: false}
+                                );
+                                confirmModal.show();
+                            }
+                            catch(err){
+                                alert(err);
+                            }
                         }
                     }
                 }
@@ -183,16 +230,5 @@
             }
         }
     </script>
-
-
-    </body>
-<!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script type="text/javascript" src={{url_for('static', filename="js/scripts.js")}}></script>
-    <!--core ajax-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/1678f3c00f.js" crossorigin="anonymous"></script>
-
+</body>
 </html>

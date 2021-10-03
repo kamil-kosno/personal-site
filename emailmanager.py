@@ -12,7 +12,6 @@ def send_email(form):
     name = form['name']
     email_local = form['email']
     message = form['message']
-
     body = f"Name: {name}\n" \
            f"Email: {email_local}\n" \
            f"Message:\n {message}"

@@ -147,7 +147,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <h3>Thank you for your message! Press OK and wait..</h3>
+                    <h3 id="confirmation-message"></h3>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
@@ -170,6 +170,15 @@
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/1678f3c00f.js" crossorigin="anonymous"></script>
     <script>
+        var sendMsgModalEl = document.getElementById('sendMessage')
+            sendMsgModalEl.addEventListener('hidden.bs.modal', function (event) {
+                // get form
+                var form = document.querySelector("form#message_form");
+                //Reset form to its initial state
+                form.reset();
+                var err = document.getElementById('message-form-errors');
+                err.innerHTML = '';
+            })
         function validate()
         {
             // get form
@@ -205,14 +214,34 @@
                                 html += "<p>" + item + "</p>";
                             }
                         }
-                        else
+                        else if(obj != null && 'success' in obj)
                         {
                             try
                             {
-                                confirmMessageModalDiv = document.getElementById('confirmMessage');
-                                confirmMessageModalDiv.addEventListener('hidden.bs.modal', function (event) {
-                                    form.submit();
-                                })
+                                var message = obj['success'];
+                                var confirmMsg = document.getElementById('confirmation-message');
+                                confirmMsg.innerHTML = message;
+                                var confirmModal = new bootstrap.Modal
+                                (
+                                    document.getElementById('confirmMessage'), {keyboard: false}
+                                );
+                                var sendMessageModal = document.getElementById('sendMessage');
+                                var sendModal = bootstrap.Modal.getInstance(sendMessageModal);
+                                sendModal.hide();
+                                //Show confirmation message
+                                confirmModal.show();
+                            }
+                            catch(err){
+                                alert(err);
+                            }
+                        }
+                        else if(obj != null && 'failure' in obj)
+                        {
+                            try
+                            {
+                                var message = obj['failure'];
+                                var confirmMsg = document.getElementById('confirmation-message');
+                                confirmMsg.innerHTML = message;
                                 var confirmModal = new bootstrap.Modal
                                 (
                                     document.getElementById('confirmMessage'), {keyboard: false}
@@ -225,7 +254,7 @@
                         }
                     }
                 }
-                xhttp.open("POST", "/validate");
+                xhttp.open("POST", "/handle_form");
                 xhttp.send(fd);
             }
         }

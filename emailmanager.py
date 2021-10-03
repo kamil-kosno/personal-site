@@ -13,8 +13,8 @@ def send_email(form):
     email_local = form['email']
     message = form['message']
     body = f"Name: {name}\n" \
-           f"Email: {email_local}\n" \
-           f"Message:\n {message}"
+           f"\nEmail: {email_local}\n" \
+           f"\nMessage:\n\n {message}"
 
     with smtplib.SMTP(SMTP_SERVER) as connection:
         connection.starttls()

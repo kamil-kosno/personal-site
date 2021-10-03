@@ -29,7 +29,6 @@ def handle_form():
         return err_msg
     else:
         try:
-            print('sending')
             send_email(request.form)
             for field in message_form:
                 field.data = ''

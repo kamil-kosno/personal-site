@@ -74,27 +74,29 @@
  <section id="testimonials">
     <div id="testimonial-carousel" class="carousel slide" data-bs-ride="false">
         <div class="carousel-inner">
-            <div class="carousel-item active container-fluid testimonial-background" style="background-image: url({{url_for('static', filename='/resources/frame.png')}})">
+            <div class="carousel-item active container-fluid">
                 <div class="testimonial-outer">
                  <div class="testimonial-section">
                  <img class="testimonial-image" src={{url_for('static', filename="/resources/bambi.jpg")}} alt="testimonial-pic"/>
                  <h4>Bambi Kardos</h4>
                  <p>Global Alliance Director at Q2 Solutions</p>
                  </div>
-                <div>
-                <h2 class="testimonial-text">Kamil is a highly dedicated data manager/analyst with exceptional customer service skills. He is dedicated to not only solving problems he encounters but to identifying solutions to prevent the issues from resurfacing. He is detail oriented and continually strives for perfection in everything he does.</h2>
-                </div>
-                </div>
+                 <div class="wrap">
+                       <h2 class="testimonial-text">Kamil is a highly dedicated data manager/analyst with exceptional customer service skills. He is dedicated to not only solving problems he encounters but to identifying solutions to prevent the issues from resurfacing. He is detail oriented and continually strives for perfection in everything he does.</h2>
+                       <div class="testimonial-background"></div>
+                 </div>
+                 </div>
             </div>
-            <div class="carousel-item container-fluid testimonial-background" style="background-image: url({{url_for('static', filename='/resources/frame.png')}})">
+            <div class="carousel-item container-fluid">
                   <div class="testimonial-outer">
                    <div class="testimonial-section">
                    <img class="testimonial-image" src={{url_for('static', filename="/resources/marjorie.jpg")}} alt="testimonial-pic">
                    <h4>Marjorie Powell</h4>
                    <p>Medical Technologist</p>
                    </div>
-                   <div>
+                   <div class="wrap">
                     <h2 class="testimonial-text">Kamil can best be described as an individual who is accountable and will resolve all problems he encounters. He works well with others and is an asset to his company.</h2>
+                   <div class="testimonial-background"></div>
                    </div>
                   </div>
                 </div>

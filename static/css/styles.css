@@ -213,3 +213,7 @@ hr {
 .message-form-errors {
     color: red;
 }
+
+#message {
+    min-height: 200px;
+}
